@@ -1,0 +1,38 @@
+{
+  "name": "members-only",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Proxtron/members-only#readme",
+  "bugs": {
+    "url": "https://github.com/Proxtron/members-only/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Proxtron/members-only.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx --watch --env-file=.env src/app.ts",
+    "build": "tsc && copyfiles -u 1 \"src/views/**/*\" \"src/public/**/*\" dist",
+    "clean": "rm -rf dist",
+    "start": "node ./dist/app.js"
+  },
+    "dependencies": {
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.6",
+    "@types/express-validator": "^2.20.33",
+    "@types/node": "^22.19.13",
+    "@types/pg": "^8.16.0",
+    "copyfiles": "^2.4.1",
+    "dotenv": "^17.3.1",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-validator": "^7.3.1",
+    "pg": "^8.18.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  }
+}

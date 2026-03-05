@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include("navbar") %>
+    <a href="/">Back to Inventory</a>
+
+    <h1><%= vehicle.year %> <%= vehicle.make_name %>  <%= vehicle.model_name %></h1>
+    <p><b>Type:</b> <a href="/vehicle/type/<%- vehicle.vehicle_type_id %>"><%= vehicle.vehicle_type_name %></a></p>
+    <p><b>Color:</b> <%= vehicle.color %></p>
+    <p><b>Price:</b> <%= vehicle.price %></p>
+    <p><b>Year:</b> <%= vehicle.year %></p>
+    <p><b>Make:</b> <a href="/make/<%- vehicle.make_id %>"><%= vehicle.make_name %></a></p>
+    <p><b>Model:</b> <%= vehicle.model_name %></p>
+    <form action="/vehicle/delete" method="POST">
+        <input type="number" name="vehicle_id" value="<%- vehicle.vehicle_id %>" hidden>
+        <button type="submit">Delete Vehicle</button>
+    </form>
+</body>
+</html>

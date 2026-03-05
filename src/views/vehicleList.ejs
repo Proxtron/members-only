@@ -1,0 +1,29 @@
+<a href="/vehicle/new" class="form-row">Add a new vehicle</a>
+<% if(vehicles.length === 0) { %>
+    <p>No vehicles in inventory.</p>
+<% } else { %>
+    <table>
+        <thead>
+            <tr>
+                <th>Year</th>
+                <th>Make</th>
+                <th>Model</th>
+                <th>Type</th>
+                <th>Color</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for(const vehicle of vehicles) { %>
+                <tr class="clickable" onclick="window.location = '/vehicle/detail/<%= vehicle.vehicle_id %>'">
+                    <td><%= vehicle.year %></td>
+                    <td><%= vehicle.make_name %></td>
+                    <td><%= vehicle.model_name %></td>
+                    <td><%= vehicle.vehicle_type_name %></td>
+                    <td><%= vehicle.color %></td>
+                    <td><%= vehicle.price %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+<% } %>

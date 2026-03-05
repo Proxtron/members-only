@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create a Model</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <%- include("../navbar") %>
+
+    <form action="/model/new" method="POST">
+        <div class="form-row">
+            <label for="model">Model:</label>
+            <input type="text" id="model" name="model" required>
+        </div>
+        <div class="form-row">
+            <label for="make">Make:</label>
+            <select name="make" id="make" required>
+                <option value="" disabled selected>Choose Make</option>
+                <% for(const make of allMakes) { %>
+                    <option value="<%- make.id %>"><%= make.make_name %></option>
+                <% } %>
+            </select>
+        </div>
+        <div class="form-row">
+            <label for="vehicle_type">Vehicle Type:</label>
+            <select name="vehicle_type" id="vehicle_type" required>
+                <option value="" disabled selected>Choose Type</option>
+                <% for(const vehicleType of allVehicleTypes) { %>
+                    <option value="<%- vehicleType.vehicle_type_id %>"><%= vehicleType.vehicle_type_name %></option>
+                <% } %>
+            </select>
+        </div>
+        <button type="submit">Add Model</button>
+    </form>
+</body>
+</html>
