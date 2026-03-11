@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Members only Club</title>
+</head>
+<body>
+    <h1>Members only Club</h1>
+    <% if(locals.user) { %>
+        <p>Welcome, <%= user.first_name %></p>
+    <% } else { %>
+        <p>
+            You are not signed in. 
+            <a href="/user/sign-in">Log In</a> or <a href="/user/sign-up">Register</a>
+        </p>
+    <% } %>
+</body>
+</html>

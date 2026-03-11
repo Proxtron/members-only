@@ -3,6 +3,7 @@ import validationResultMiddleware from "../middleware/validationResultMiddleware
 import { checkUserExistsValidator, checkPassAndConfirmPass } from "../middleware/validators.js";
 import { body } from "express-validator";
 import { Router } from "express";
+import passport from "passport";
 
 const userRouter = Router();
 
@@ -16,6 +17,19 @@ userRouter.post("/sign-up",
     body("password").custom(checkPassAndConfirmPass).withMessage("Password and confirm password fields are not the same"),
     validationResultMiddleware("sign-up"),
     userController.postSignUp
+);
+
+userRouter.get("/sign-in", userController.getSignIn);
+userRouter.post("/sign-in", 
+    body("first_name").trim().notEmpty().withMessage("First name is a required field"),
+    body("last_name").trim().notEmpty().withMessage("Last name is a required field"),
+    body("password").trim().notEmpty().withMessage("Password is a required field"),
+    validationResultMiddleware("sign-in"),
+    passport.authenticate("local", {
+        successRedirect: "/",
+        failureRedirect: "/user/sign-in",
+        failureFlash: true
+    })
 );
 
 export default userRouter;

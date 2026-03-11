@@ -22,3 +22,9 @@ export const postSignUp = async (req: Request<{}, {}, UserSignUpBody>, res: Resp
         next(error);
     }
 }
+
+export const getSignIn = async (req: Request, res: Response) => {
+    const errors = req.flash("error");
+    
+    res.render("sign-in", {errors});
+}

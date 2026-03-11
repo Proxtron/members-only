@@ -2,10 +2,15 @@ import express from "express";
 import "dotenv/config";
 import indexRouter from "./routes/indexRoutes.js";
 import path from "node:path";
-import { Strategy as LocalStrategy, type VerifyFunction} from "passport-local";
-import type { IVerifyOptions } from "passport-local";
+import { Strategy as LocalStrategy} from "passport-local";
 import userRouter from "./routes/userRoutes.js";
 import type { Request, Response, NextFunction } from "express";
+import session from "express-session";
+import passport from "passport";
+import { getUserWithId, getUserWithNameCombo } from "./db/user.js";
+import type { UserAddInterface } from "./types.js";
+import bcrypt from "bcrypt";
+import flash from "connect-flash";
 
 const app = express();
 
@@ -16,14 +21,59 @@ const assetsPath = path.join(import.meta.dirname, "public");
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 
-// const verifyFunction: VerifyFunction = (
-//     username: string, 
-//     password: string, 
-//     done: (error: any, user?: Express.User | false, options?: IVerifyOptions) => void
-// ) => {
+app.use(session({secret: "cats", resave: false, saveUninitialized: false}));
+app.use(passport.session());
+app.use(flash());
 
-// }
-// new LocalStrategy(verifyFunction)
+passport.use(new LocalStrategy({
+    usernameField: "first_name",
+    passReqToCallback: true
+}, async (req, first_name, password, done) =>  {
+    try {
+        const { last_name } = req.body as UserAddInterface;
+        const user = await getUserWithNameCombo(first_name, last_name);
+
+        if(!user) {
+            return done(null, false, {message: "Name or password is incorrect"});
+        }
+
+        const passwordCorrect = await bcrypt.compare(password, user.password);
+        if(!passwordCorrect) {
+            return done(null, false, {message: "Name or password is incorrect"});
+        }
+
+        return done(null, user);
+    } catch(error) {
+        done(error);
+    }
+    
+
+}));
+
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser(async (id: number, done) => {
+  try {
+    const user = await getUserWithId(id)
+
+    if(!user) {
+        return done(null, false);
+    }
+
+    done(null, user);
+  } catch(err) {
+    done(err);
+  }
+});
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+    console.clear();
+    console.log(req.user);
+    console.log(req.session);
+    next();
+});
 
 //Routers
 app.use("/", indexRouter);
