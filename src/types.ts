@@ -4,3 +4,9 @@ export interface UserSignUpBody {
     password: string,
     confirm_password: string
 }
+
+export interface UserAddInterface {
+    first_name: string,
+    last_name: string,
+    password: string
+}

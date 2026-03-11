@@ -1,5 +1,5 @@
+import type { UserAddInterface } from "../types.js";
 import pool from "./pool.js";
-
 
 export const getUserCountWithNameCombo = async (first_name: string, last_name: string) => {
     const {rows}  = await pool.query<{count: number}>(`
@@ -12,6 +12,10 @@ export const getUserCountWithNameCombo = async (first_name: string, last_name: s
     return rows[0]?.count ?? 0;
 }
 
-export const addNewUser = async () => {
-
+export const addNewUser = async (user: UserAddInterface) => {
+    await pool.query(`
+        INSERT INTO public.user (first_name, last_name, password)
+        VALUES($1, $2, $3);
+    `, [user.first_name, user.last_name, user.password]);
+    
 }

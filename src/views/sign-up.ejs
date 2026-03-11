@@ -10,7 +10,7 @@
     <% if(locals.errors) { %>
         <%- include("components/error-list", {errors}) %>
     <% } %>
-    <form action="/sign-up" method="POST">
+    <form action="/user/sign-up" method="POST">
         <p>
             <label for="first_name">First Name</label>
             <input type="text" id="first_name" name="first_name" required>

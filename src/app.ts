@@ -4,6 +4,8 @@ import indexRouter from "./routes/indexRoutes.js";
 import path from "node:path";
 import { Strategy as LocalStrategy, type VerifyFunction} from "passport-local";
 import type { IVerifyOptions } from "passport-local";
+import userRouter from "./routes/userRoutes.js";
+import type { Request, Response, NextFunction } from "express";
 
 const app = express();
 
@@ -23,9 +25,17 @@ app.use(express.urlencoded({ extended: true }));
 // }
 // new LocalStrategy(verifyFunction)
 
-
-
+//Routers
 app.use("/", indexRouter);
+app.use("/user", userRouter);
+
+
+//Error handler
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+    console.error(err);
+    res.status(500).render("error", {message: "Something went wrong"});
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
