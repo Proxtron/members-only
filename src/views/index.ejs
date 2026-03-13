@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Members only Club</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
+    <%- include("components/header") %>
     <h1>Members only Club</h1>
     <% if(locals.user) { %>
         <p>Welcome, <%= user.first_name %></p>

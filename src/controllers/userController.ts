@@ -4,6 +4,10 @@ import { addNewUser } from "../db/user.js";
 import bcrypt from "bcrypt";
 
 export const getSignUp = async (req: Request, res: Response) => {
+    if(req.isAuthenticated()) {
+        return res.redirect("/")
+    }
+
     res.render("sign-up");
 }
 
@@ -24,6 +28,10 @@ export const postSignUp = async (req: Request<{}, {}, UserSignUpBody>, res: Resp
 }
 
 export const getSignIn = async (req: Request, res: Response) => {
+    if(req.isAuthenticated()) {
+        return res.redirect("/")
+    }
+
     const errors = req.flash("error");
     
     res.render("sign-in", {errors});
