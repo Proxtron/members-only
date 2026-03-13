@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Club</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+    <%- include("components/header") %>
+    <h1>Join Club</h1>
+    <form action="/user/join-club" method="POST">
+        <div>
+            <label for="secret">What is the secret code?</label>
+            <input type="text" id="secret" required>
+        </div>
+    </form>
+</body>
+</html>

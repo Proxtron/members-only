@@ -46,3 +46,11 @@ export const getSignOut = async (req: Request, res: Response) => {
         }
     });
 }
+
+export const getJoinClub = async (req: Request, res: Response) => {
+    if(req.user?.member) {
+        return res.redirect("/")
+    }
+
+    res.render("join-club");
+}

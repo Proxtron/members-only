@@ -34,4 +34,6 @@ userRouter.post("/sign-in",
 
 userRouter.get("/sign-out", userController.getSignOut);
 
+userRouter.get("/join-club", userController.getJoinClub);
+
 export default userRouter;
