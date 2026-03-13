@@ -32,4 +32,6 @@ userRouter.post("/sign-in",
     })
 );
 
+userRouter.get("/sign-out", userController.getSignOut);
+
 export default userRouter;

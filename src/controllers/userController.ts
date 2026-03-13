@@ -36,3 +36,13 @@ export const getSignIn = async (req: Request, res: Response) => {
     
     res.render("sign-in", {errors});
 }
+
+export const getSignOut = async (req: Request, res: Response) => {
+    req.logout((err) => {
+        if(err) {
+            return res.render("error")
+        } else {
+            return res.redirect("/")
+        }
+    });
+}
