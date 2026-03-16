@@ -41,3 +41,9 @@ export const addNewUser = async (user: UserAddInterface) => {
     `, [user.first_name, user.last_name, user.password]);
     
 }
+
+export const addUserToClub = async (user_id: number) => {
+    await pool.query<{member: boolean}>(`
+        UPDATE public.user SET member = true WHERE id = $1
+    `, [user_id]);
+}

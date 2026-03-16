@@ -1,6 +1,6 @@
 import * as userController from "../controllers/userController.js";
 import validationResultMiddleware from "../middleware/validationResultMiddleware.js";
-import { checkUserExistsValidator, checkPassAndConfirmPass } from "../middleware/validators.js";
+import { checkUserExistsValidator, checkPassAndConfirmPass, checkSecret } from "../middleware/validators.js";
 import { body } from "express-validator";
 import { Router } from "express";
 import passport from "passport";
@@ -35,5 +35,10 @@ userRouter.post("/sign-in",
 userRouter.get("/sign-out", userController.getSignOut);
 
 userRouter.get("/join-club", userController.getJoinClub);
+userRouter.post("/join-club", 
+    body("secret").trim().custom(checkSecret).withMessage("Secret code is wrong"),
+    validationResultMiddleware("join-club"),
+    userController.postJoinClub
+);
 
 export default userRouter;

@@ -8,12 +8,16 @@
 </head>
 <body>
     <%- include("components/header") %>
+    <% if(locals.errors) { %>
+        <%- include("components/error-list", {errors}) %>
+    <% } %>
     <h1>Join Club</h1>
     <form action="/user/join-club" method="POST">
-        <div>
+        <div style="margin-bottom: 1rem;">
             <label for="secret">What is the secret code?</label>
-            <input type="text" id="secret" required>
+            <input type="text" id="secret" name="secret" required>
         </div>
+        <button type="submit">Submit</button>
     </form>
 </body>
 </html>

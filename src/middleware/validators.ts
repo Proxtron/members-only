@@ -14,3 +14,8 @@ export const checkPassAndConfirmPass = (password: string, {req}: Meta) => {
     const { confirm_password } = req.body as UserSignUpBody;
     return confirm_password === password;
 }
+
+export const checkSecret = (secret: string) => {
+    console.log(secret);
+    return process.env.SECRET === secret;
+}

@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import type { UserAddInterface, UserSignUpBody } from "../types.js";
-import { addNewUser } from "../db/user.js";
+import { addNewUser, addUserToClub } from "../db/user.js";
 import bcrypt from "bcrypt";
 
 export const getSignUp = async (req: Request, res: Response) => {
@@ -48,9 +48,29 @@ export const getSignOut = async (req: Request, res: Response) => {
 }
 
 export const getJoinClub = async (req: Request, res: Response) => {
-    if(req.user?.member) {
+    if(!req.user || req.user?.member) {
         return res.redirect("/")
     }
 
     res.render("join-club");
+}
+
+export const postJoinClub = async (req: Request<{}, {}, {
+    secret: string
+}>, res: Response, next: NextFunction) => {
+    if(req.user?.member) {
+        return res.redirect("/")
+    }
+
+    if(!req.user) {
+        return res.status(403).send("Forbidden");
+    }
+
+    try {
+        addUserToClub(req.user.id)
+        return res.redirect("/");
+    } catch(error) {
+        next(error);
+    }
+    
 }
