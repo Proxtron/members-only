@@ -13,6 +13,8 @@ import bcrypt from "bcrypt";
 import flash from "connect-flash";
 import connectPgSimple from "connect-pg-simple";
 import pool from "./db/pool.js";
+import messageRouter from "./routes/messageRoutes.js";
+import { checkAuthentication } from "./middleware/checkAuthenticationMiddleware.js";
 
 const app = express();
 
@@ -89,7 +91,7 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 //Routers
 app.use("/", indexRouter);
 app.use("/user", userRouter);
-
+app.use("/message", checkAuthentication, messageRouter);
 
 //Error handler
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
