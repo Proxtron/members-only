@@ -11,6 +11,8 @@ import { getUserWithId, getUserWithNameCombo } from "./db/user.js";
 import type { UserAddInterface } from "./types.js";
 import bcrypt from "bcrypt";
 import flash from "connect-flash";
+import connectPgSimple from "connect-pg-simple";
+import pool from "./db/pool.js";
 
 const app = express();
 
@@ -21,7 +23,15 @@ const assetsPath = path.join(import.meta.dirname, "public");
 app.use(express.static(assetsPath));
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session({secret: "cats", resave: false, saveUninitialized: false}));
+const PgStore = connectPgSimple(session);
+
+app.use(session({
+    store: new PgStore({pool: pool}),
+    secret: "cats", 
+    resave: false, 
+    saveUninitialized: false
+}));
+
 app.use(passport.session());
 app.use(flash());
 
