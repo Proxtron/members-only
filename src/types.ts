@@ -16,7 +16,8 @@ export interface User {
     first_name: string,
     last_name: string,
     password: string,
-    member: boolean
+    member: boolean,
+    admin: boolean
 }
 
 export interface MessageDetail {
@@ -36,7 +37,8 @@ declare global {
             first_name: string,
             last_name: string,
             password: string,
-            member: boolean
+            member: boolean,
+            admin: boolean
         }
     }
 }

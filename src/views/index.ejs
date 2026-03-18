@@ -32,9 +32,12 @@
                 <li>
                     <h3><%= message.title %></h3>
                     <p><%= message.message %></p>
-                    <% if(locals.user) { %>
+                    <% if(locals.user && user.member) { %>
                         <p>Posted by: <%= message.poster_first_name %> <%= message.poster_last_name %></p>
                         <p>Created: <%= message.timestamp %></p>
+                    <% } %>
+                    <% if(locals.user && user.admin) { %>
+                        <a href="/message/delete-message/<%- message.id %>">Delete Message</a>
                     <% } %>
                 </li>
             <% } %>

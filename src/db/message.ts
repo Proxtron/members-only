@@ -26,3 +26,10 @@ export const getAllMessages = async () => {
     `);
     return rows;
 }
+
+export const deleteMessage = async (message_id: number) => {
+    await pool.query(`
+        DELETE FROM public.message
+        WHERE id = $1
+    `, [message_id]);
+}

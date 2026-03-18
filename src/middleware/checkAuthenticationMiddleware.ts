@@ -8,6 +8,10 @@ export const checkAuthentication = (req: Request, res: Response, next: NextFunct
     }
 }
 
-export const checkIsMember = () => {
-
+export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
+    if(req.user && req.user.admin) {
+        next();
+    } else {
+        return res.status(403).send("Forbidden");
+    }
 }
