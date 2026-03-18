@@ -11,11 +11,34 @@
     <h1>Members only Club</h1>
     <% if(locals.user) { %>
         <p>Welcome, <%= user.first_name %></p>
+        <% if(user.member) { %>
+            <p>You are a member</p>
+        <% } else { %>
+            <p>You are not a member</p>
+        <% } %>
     <% } else { %>
         <p>
             You are not signed in. 
             <a href="/user/sign-in">Log In</a> or <a href="/user/sign-up">Register</a>
         </p>
+    <% } %>
+
+    <% if(!locals.messages || messages.length == 0) { %>
+        <h2>No messages created yet. Be the first one!</h2>
+    <% } else { %>
+        <h2>Messages</h2>
+        <ol style="list-style: none;">
+            <% for(const message of messages) { %>
+                <li>
+                    <h3><%= message.title %></h3>
+                    <p><%= message.message %></p>
+                    <% if(locals.user) { %>
+                        <p>Posted by: <%= message.poster_first_name %> <%= message.poster_last_name %></p>
+                        <p>Created: <%= message.timestamp %></p>
+                    <% } %>
+                </li>
+            <% } %>
+        </ol>
     <% } %>
 </body>
 </html>

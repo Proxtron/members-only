@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
-import pool from "../db/pool.js";
+import { getAllMessages } from "../db/message.js";
 
 export const index = async (req: Request, res: Response) => {
-    res.render("index");
+    const messages = await getAllMessages();
+    res.render("index", {messages});
 }

@@ -19,6 +19,16 @@ export interface User {
     member: boolean
 }
 
+export interface MessageDetail {
+    id: number, 
+    poster_id: number,
+    poster_first_name: string,
+    poster_last_name: string,
+    title: string, 
+    message: string,
+    timestamp: string,
+}
+
 declare global {
     namespace Express {
         interface User {
